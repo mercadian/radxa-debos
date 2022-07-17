@@ -34,8 +34,11 @@ deb http://${DEBIAN_MIRROR} ${SUITE}-updates main contrib non-free
 deb http://${DEBIAN_MIRROR} ${SUITE}-backports main contrib non-free
 #deb-src http://${DEBIAN_MIRROR} ${SUITE}-backports main contrib non-free
 
-deb http://security.debian.org/ ${SUITE}/updates main contrib non-free
-#deb-src http://security.debian.org/ ${SUITE}/updates main contrib non-free
+deb http://security.debian.org/ ${SUITE}-security main contrib non-free
+#deb-src http://security.debian.org/ ${SUITE}-security main contrib non-free
+
+deb [arch=arm64] https://download.docker.com/linux/debian ${SUITE} stable
+# deb-src [arch=arm64] https://download.docker.com/linux/debian ${SUITE} stable
 EOF
 ;;
 
