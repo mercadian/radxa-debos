@@ -15,10 +15,11 @@ export DISTRO=bullseye
 export VARIANT=server
 export ARCH=arm64
 export FORMAT=gpt
-export IMAGESIZE=6000MB
+export IMAGESIZE=5000MB
 
 # Add pre-installed packages for target system
 cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-packages.list <<EOF
+radxa-add-overlay*.deb
 rockchip-overlay*.deb
 linux-headers-5.10.66*.deb
 linux-image-5.10.66*.deb
@@ -61,17 +62,11 @@ cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-yaml.l
 21_packages_debian_server.yaml
 21_packages_smartnode.yaml
 22_packages_end.yaml
-30_overlays.yaml
-60_setup_user.yaml
-61_add_apt_sources.yaml
-62_fix_resolv_conf.yaml
-63_setup_hostname_hosts.yaml
-65_fix_uenv.yaml
-80_preinstall_tb_packages.yaml
-84_preinstall_u-boot.yaml
+70_system_common_setup.yaml
 85_u_boot_rk35xx.yaml
 86_install_smartnode.yaml
-87_prep_boot_script.yaml
+87_add_overlays_to_boot.yaml
 90_clean_rootfs.yaml
-99_brick.yaml
 EOF
+
+## 71_brick.yaml

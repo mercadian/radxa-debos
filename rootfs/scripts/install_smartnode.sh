@@ -11,9 +11,8 @@ fi
 USER="rock"
 DOCKER_COMPOSE_VERSION="1.29.2"
 
-# Grab the docker repo key - note that apt-key is deprecated
+# Grab the docker repo key
 wget -O- "https://download.docker.com/linux/debian/gpg" | sudo apt-key add -
-#wget -O- "https://download.docker.com/linux/debian/gpg" | gpg --dearmor > /usr/share/keyrings/docker-archive-keyring.gpg
 
 # Install Docker and docker-compose
 DEBIAN_FRONTEND=noninteractive apt update -qq > /dev/null
