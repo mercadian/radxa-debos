@@ -7,3 +7,4 @@ output
 tmp
 boards/*/*/testing-system
 *.swp
+.vscode-ctags
