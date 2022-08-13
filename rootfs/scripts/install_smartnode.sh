@@ -25,4 +25,5 @@ usermod -aG docker $USER
 mkdir /home/$USER/bin
 wget https://github.com/rocket-pool/smartnode-install/releases/latest/download/rocketpool-cli-linux-arm64 -O /home/$USER/bin/rocketpool
 chmod +x /home/$USER/bin/rocketpool 
-/home/$USER/bin/rocketpool --allow-root s i -d -p /home/$USER/.rocketpool -y
+su -c "/home/$USER/bin/rocketpool s i -d -y" $USER
+/home/$USER/bin/rocketpool --allow-root -c /home/$USER/.rocketpool s d -y

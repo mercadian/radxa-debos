@@ -7,7 +7,7 @@ if [[ "$(id -u)" -ne "0" ]]; then
     exit 1
 fi
 
-BOARD=$1
+BOARD="proteus"
 
 rm -rf /etc/hosts /etc/hostname
 touch /etc/hosts /etc/hostname

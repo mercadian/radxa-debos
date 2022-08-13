@@ -15,7 +15,7 @@ export DISTRO=bullseye
 export VARIANT=server
 export ARCH=arm64
 export FORMAT=gpt
-export IMAGESIZE=3800MB
+export IMAGESIZE=6000MB
 
 # Add pre-installed packages for target system
 cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-packages.list <<EOF
@@ -66,9 +66,12 @@ cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-yaml.l
 61_add_apt_sources.yaml
 62_fix_resolv_conf.yaml
 63_setup_hostname_hosts.yaml
+65_fix_uenv.yaml
 80_preinstall_tb_packages.yaml
 84_preinstall_u-boot.yaml
 85_u_boot_rk35xx.yaml
 86_install_smartnode.yaml
+87_prep_boot_script.yaml
 90_clean_rootfs.yaml
+99_brick.yaml
 EOF
