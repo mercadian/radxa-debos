@@ -26,3 +26,6 @@ wget https://github.com/rocket-pool/smartnode-install/releases/latest/download/r
 chmod +x /home/$USER/bin/rocketpool 
 su -c "/home/$USER/bin/rocketpool s i -d -y" $USER
 /home/$USER/bin/rocketpool --allow-root -c /home/$USER/.rocketpool s d -y
+
+# Use legacy iptables implementation which Docker requires
+update-alternatives --set iptables /usr/sbin/iptables-legacy
