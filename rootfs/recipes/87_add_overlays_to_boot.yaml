@@ -1,4 +1,0 @@
-  - action: run
-    chroot: true
-    script: scripts/add_overlays_to_boot.sh
-
