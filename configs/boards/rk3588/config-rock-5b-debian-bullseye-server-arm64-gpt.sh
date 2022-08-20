@@ -65,7 +65,6 @@ cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-yaml.l
 70_system_common_setup.yaml
 85_u_boot_rk35xx.yaml
 86_install_smartnode.yaml
-87_update_extlinux.yaml
 88_add_explicit_dtb.yaml
 90_clean_rootfs.yaml
 EOF

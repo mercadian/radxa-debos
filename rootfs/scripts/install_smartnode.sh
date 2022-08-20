@@ -20,10 +20,13 @@ DEBIAN_FRONTEND=noninteractive apt install docker-ce docker-ce-cli containerd.io
 pip3 install --upgrade --quiet docker-compose==$DOCKER_COMPOSE_VERSION
 usermod -aG docker $USER
 
-# Install the Smartnode
+# Download the Smartnode CLI
 mkdir /home/$USER/bin
 wget https://github.com/rocket-pool/smartnode-install/releases/latest/download/rocketpool-cli-linux-arm64 -O /home/$USER/bin/rocketpool
-chmod +x /home/$USER/bin/rocketpool 
+chmod +x /home/$USER/bin/rocketpool
+chown -R $USER:$USER /home/$USER/bin
+
+# Install the Smartnode
 su -c "/home/$USER/bin/rocketpool s i -d -y" $USER
 /home/$USER/bin/rocketpool --allow-root -c /home/$USER/.rocketpool s d -y
 
