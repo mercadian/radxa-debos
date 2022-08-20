@@ -11,8 +11,12 @@ fi
 USER="rock"
 DOCKER_COMPOSE_VERSION="1.29.2"
 
-# Grab the docker repo key
-wget -O- "https://download.docker.com/linux/debian/gpg" | sudo apt-key add -
+# Add the Docker repo
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Install Docker and docker-compose
 DEBIAN_FRONTEND=noninteractive apt update -qq > /dev/null
