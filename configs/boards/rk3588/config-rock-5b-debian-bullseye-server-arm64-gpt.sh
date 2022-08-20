@@ -21,6 +21,7 @@ export IMAGESIZE=5000MB
 cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-packages.list <<EOF
 radxa-add-overlay*.deb
 rockchip-overlay*.deb
+proteus-overlay_*_arm64.deb
 linux-headers-5.10.66*.deb
 linux-image-5.10.66*.deb
 intel-wifibt-firmware*.deb
