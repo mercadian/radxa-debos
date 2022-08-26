@@ -11,7 +11,10 @@ cmdline: earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 console=tty1 consol
 cmdline: panic rootwait rw init=/sbin/init rootfstype=ext4
 
 # Docker optimizations
-cmdline: cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory swapaccount=1
+# cmdline: cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory swapaccount=1
+
+# Force cgroups v1 because the Rock kernel doesn't support v2 fully yet and Docker requires full support
+cmdline: systemd.unified_cgroup_hierarchy=0 swapaccount=1
 
 # For RK3588
 cmdline: irqchip.gicv3_pseudo_nmi=0
@@ -24,5 +27,5 @@ cmdline: coherent_pool=2M
 # dt overlay line: started with "dtoverlay=". One dt overlay one line.
 #
 
-dtoverlay=rk3588-uart7-m2
+# dtoverlay=rk3588-uart7-m2
 
