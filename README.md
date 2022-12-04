@@ -2,27 +2,41 @@
 
 ## Introduction
 
-This guide describes how to use debos-radxa, based on [debos](https://github.com/go-debos/debos), to generate Radxa system image.
+This guide describes how to use debos-radxa, based on [debos](https://github.com/go-debos/debos), to generate Debian/Ubuntu image for Radxa boards.
+
+Please note that the [release](https://github.com/radxa/debos-radxa/releases/latest) are auto generated builds without additional testing, if you have issues with the images, please submit an issue.
 
 ## Supported boards and system images
 
-* Radxa CM3 IO    : https://github.com/radxa-build/radxa-cm3-io/releases/latest
-* Radxa E23       : https://github.com/radxa-build/radxa-e23/releases/latest
-* Radxa E25       : https://github.com/radxa-build/radxa-e25/releases/latest
-* Radxa Zero      : https://github.com/radxa-build/radxa-zero/releases/latest
-* Radxa Zero 2    : https://github.com/radxa-build/radxa-zero2/releases/latest
-* ROCK 3A         : https://github.com/radxa-build/rock-3a/releases/latest
-* ROCK 3B         : https://github.com/radxa-build/rock-3b/releases/latest
-* ROCK 5B         : https://github.com/radxa-build/rock-5b/releases/latest
-* ROCK Pi 4B      : https://github.com/radxa-build/rockpi-4b/releases/latest
-* ROCK Pi 4C Plus : https://github.com/radxa-build/rockpi-4cplus/releases/latest
+* Radxa CM3 IO
+* Radxa E23
+* Radxa E25
+* Radxa NX5
+* Radxa Zero
+* Radxa Zero 2
+* ROCK 3A
+* ROCK 3B
+* ROCK 3C
+* ROCK 5A
+* ROCK 5B
+* ROCK 4B
+* ROCK 4C+
+
+Auto generated build images: https://github.com/radxa/debos-radxa/releases/latest
 
 ## Build Host
 
 ### Required Packages for the Build Host
 
 You must install essential host packages on your build host.
-The following command installs the host packages on an Ubuntu distribution
+
+The following command installs the host packages on an Ubuntu distribution.
+
+<pre>
+$ sudo apt-get install -y git
+</pre>
+
+The following command installs the host packages on an Debian distribution.
 
 <pre>
 $ sudo apt-get install -y git user-mode-linux libslirp-helper
@@ -30,7 +44,7 @@ $ sudo apt-get install -y git user-mode-linux libslirp-helper
 
 ### Install Docker Engine on Ubuntu
 
-See Docker Docs [installing Docker Engineer on Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
+See Docker Docs [installing Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
 
 ## Use Git to Clone debos-radxa
 
@@ -69,7 +83,7 @@ Launch `./build.sh` to get build options.
 <pre>
 root@terra:~/debos-radxa# ./build.sh
 TOP DIR = /build/stephen/debos-radxa
-====USAGE: ./build.sh -b <board> -m <model>====
+====USAGE: ./build-os.sh -b <board> -m <model>====
 Board list:
     radxa-cm3-io
     radxa-e23
@@ -78,7 +92,7 @@ Board list:
     radxa-zero
     radxa-zero2
     rockpi-4b
-    rockpi-4cplus
+    rock-4c-plus
     rock-3a
     rock-3b
     rock-3c
@@ -93,7 +107,7 @@ Model list:
 Start to build image such as rock-5b-ubuntu-focal-server-arm64-gpt image.
 
 <pre>
-root@terra:~/debos-radxa# ./build.sh -b rock-5b -m ubuntu
+root@terra:~/debos-radxa# ./build-os.sh -b rock-5b -m ubuntu
 TOP DIR = /home/radxa/debos-radxa
 ====Start to build  board system image====
 TOP DIR = /home/radxa/debos-radxa
@@ -131,9 +145,8 @@ In this example we will build ROCK 3A's system image with full options:
 radxa@x86-64:~$ cd ~
 radxa@x86-64:~$ cd debos-radxa/
 radxa@x86-64:~/debos-radxa$
-radxa@x86-64:~/debos-radxa$ docker run --rm --interactive --tty --device /dev/kvm --user $(id -u) --security-opt label=disable \
---workdir $PWD --mount "type=bind,source=$PWD,destination=$PWD" --entrypoint ./build.sh godebos/debos \
--c rk3568 -b rock-3a -m ubuntu -d focal -v server -a arm64 -f gpt
+radxa@x86-64:~/debos-radxa$ docker run --rm --interactive --tty --tmpfs /dev/shm:rw,nosuid,nodev,exec,size=4g --user $(id -u) --security-opt label=disable \
+--workdir $PWD --mount "type=bind,source=$PWD,destination=$PWD" --entrypoint ./build-os.sh godebos/debos -b rock-3a -m ubuntu
 </pre>
 
 #### Example two of building radxa-zero2-ubuntu-focal-server-arm64-mbr image
@@ -143,14 +156,11 @@ You can also build supported configuration with the following commands:
 <pre>
 radxa@x86-64:~$ cd ~
 radxa@x86-64:~$ cd debos-radxa/
-radxa@x86-64:~/debos-radxa$ docker run --rm --interactive --tty --device /dev/kvm --user $(id -u) --security-opt label=disable \
---workdir $PWD --mount "type=bind,source=$PWD,destination=$PWD" --entrypoint scripts/build-supported-configuration.sh \
-godebos/debos -m ubuntu -b radxa-zero2
+radxa@x86-64:~/debos-radxa$ docker run --rm --interactive --tty --tmpfs /dev/shm:rw,nosuid,nodev,exec,size=4g --user $(id -u) --security-opt label=disable \
+--workdir $PWD --mount "type=bind,source=$PWD,destination=$PWD" --entrypoint ./build-os.sh godebos/debos -m ubuntu -b radxa-zero2
 </pre>
 
 The generated system images will be copied to `./output` direcotry. You can specify different configuration in the 3rd line.
-
-Note: GitHub Actions uses some different options for `docker run` due to their runners do not support nested virtualization (i.e. no `/dev/kvm`). In that's your case you need to specify `--tmpfs /dev/shm:rw,nosuid,nodev,exec,size=4g` instead of `--device /dev/kvm`. It also uses a wrapper script to only build the supported configurations.
 
 ## How to debug errors
 
@@ -160,7 +170,7 @@ Currently `dev-shell` uses a custom docker image to build, so your result might 
 
 ## Add support for new boards
 
-`./boards/*/packages.list.d/*.list` are board-specific debos recipes.
+`./configs/boards` are board-specific debos recipes.
 
 `./rootfs/packages` contains additional packages.
 

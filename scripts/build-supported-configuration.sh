@@ -5,7 +5,7 @@ SCRIPTS_DIR=`dirname $CMD`
 TOP_DIR=$(realpath $SCRIPTS_DIR/..)
 echo "TOP DIR = $TOP_DIR"
 
-board_list=("radxa-cm3-io" "radxa-e23" "radxa-e25" "radxa-nx5" "radxa-zero" "radxa-zero2" "rockpi-4b" "rockpi-4cplus" "rock-3a" "rock-3b" "rock-3c" "rock-5a" "rock-5b" )
+board_list=("radxa-cm3-io" "radxa-e23" "radxa-e25" "radxa-nx5" "radxa-zero" "radxa-zero2" "rockpi-4b" "rock-4c-plus" "rock-3a" "rock-3b" "rock-3c" "rock-5a" "rock-5b" )
 model_list=("debian" "ubuntu")
 
 usage() {
@@ -42,7 +42,7 @@ if [ ! $BOARD ] && [ ! $MODEL ]; then
 fi
 
 case $BOARD in
-    rockpi-4b|rockpi-4cplus)
+    rockpi-4b|rock-4c-plus)
         CPU="rk3399"
         ;;
     radxa-cm3-io|radxa-e23|rock-3c)
@@ -90,7 +90,7 @@ esac
 case $MODEL in
     debian)
         case $CPU in
-            rk3399|rk3566|rk3568|rk3588s|rk3588)
+            a311d|rk3399|rk3566|rk3568|rk3588s|rk3588|s905y2)
                 DISTRO="bullseye"
                 ;;
             *)

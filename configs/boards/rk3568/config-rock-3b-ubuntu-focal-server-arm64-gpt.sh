@@ -15,7 +15,7 @@ export DISTRO=focal
 export VARIANT=server
 export ARCH=arm64
 export FORMAT=gpt
-export IMAGESIZE=2000MB
+export IMAGESIZE=3000MB
 
 # Add pre-installed packages for target system
 cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-packages.list <<EOF
@@ -31,6 +31,7 @@ EOF
 
 # Add yaml variable
 cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-variable.yaml <<EOF
+{{- \$cpu := or .cpu "${CPU}" -}}
 {{- \$board := or .board "${BOARD}" -}}
 {{- \$architecture := or .architecture "${ARCH}" -}}
 {{- \$model :=  or .model "${MODEL}" -}}
@@ -52,12 +53,14 @@ cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-yaml.l
 21_packages_base.yaml
 21_packages_bluetooth.yaml
 21_packages_devel.yaml
-21_packages_libs_ubuntu.yaml
+21_packages_kernel.yaml
+21_packages_libs.yaml
 21_packages_math.yaml
+21_packages_net.yaml
 21_packages_python_ubuntu.yaml
 21_packages_sound.yaml
 21_packages_utilities.yaml
-21_packages_net.yaml
+21_packages_wifibt.yaml
 22_packages_end.yaml
 70_system_common_setup.yaml
 85_u_boot_rk35xx.yaml

@@ -1,3 +1,6 @@
+  - action: apt
+    description: Utilities
+    packages: [
         adduser, apt, apt-transport-https, debsums, e2fsprogs, fake-hwclock,
         gdisk, ifupdown, kmod, netbase, parted, pciutils, psmisc,
         software-properties-common, sudo, sysstat, systemd, systemd-sysv,
@@ -9,9 +12,10 @@
 
         bash-completion,
 
-        gstreamer1.0-tools,
+        radxa-test,
 
         initramfs-tools, zip, unzip, dirmngr, file, htop, jq, mtd-utils, rfkill,
         rsync, usbutils, xz-utils, gnupg, gnupg1, gnupg2, kbd, sysfsutils, findutils,
-        i2c-tools, dosfstools,
+        i2c-tools, dosfstools, lm-sensors, smartmontools, nvme-cli, pm-utils,
+        triggerhappy, bsdmainutils ]
 

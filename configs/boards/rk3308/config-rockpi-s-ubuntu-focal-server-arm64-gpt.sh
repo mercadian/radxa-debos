@@ -33,6 +33,7 @@ EOF
 
 # Add yaml variable
 cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-variable.yaml <<EOF
+{{- \$cpu := or .cpu "${CPU}" -}}
 {{- \$board := or .board "${BOARD}" -}}
 {{- \$architecture := or .architecture "${ARCH}" -}}
 {{- \$model :=  or .model "${MODEL}" -}}
@@ -52,6 +53,7 @@ cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-yaml.l
 03_filesystem_deploy.yaml
 20_packages_start.yaml
 21_packages_base.yaml
+21_packages_python_ubuntu.yaml
 22_packages_end.yaml
 70_system_common_setup.yaml
 85_u_boot.yaml

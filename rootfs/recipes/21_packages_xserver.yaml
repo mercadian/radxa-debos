@@ -1,2 +1,5 @@
-        libxfont1, libinput-bin, libinput10, libwacom-common, libwacom2,
-        libunwind8, xserver-xorg-input-libinput
+  - action: apt
+    description: Xserver
+    packages: [
+        xserver-xorg-core=2:1.20.11-1, xserver-xorg-dev=2:1.20.11-1, xserver-xorg-legacy=2:1.20.11-1 ]
+
