@@ -1,0 +1,8 @@
+  - action: apt
+    description: Proteus Utilities
+    packages: [
+        lm-sensors,
+        jq,
+        fdisk,
+        nvme-cli,
+        linux-perf_5.10 ]

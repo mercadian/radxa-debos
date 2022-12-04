@@ -1,7 +1,0 @@
-        libffi-dev,
-        libssl-dev,
-        python3,
-        python3-pip,
-        lm-sensors,
-        jq,
-        

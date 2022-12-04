@@ -1,0 +1,8 @@
+  - action: apt
+    description: Net Lite
+    packages: [
+        isc-dhcp-client, avahi-utils, avahi-daemon, dhcpcd5, ethtool, fping,
+        iproute2, iputils-ping, iw, net-tools, network-manager, chrony,
+        openssh-client, openssh-server, resolvconf, ssh, wireless-tools,
+        wpasupplicant, curl, wget ]
+
