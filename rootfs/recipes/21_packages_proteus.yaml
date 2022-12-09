@@ -5,4 +5,5 @@
         jq,
         fdisk,
         nvme-cli,
-        linux-perf_5.10 ]
+        linux-perf-5.10 ]
+

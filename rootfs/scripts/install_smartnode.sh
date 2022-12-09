@@ -9,7 +9,6 @@ fi
 
 # Variables
 USER="rock"
-DOCKER_COMPOSE_VERSION="1.29.2"
 
 # Add the Docker repo
 mkdir -p /etc/apt/keyrings
@@ -20,8 +19,7 @@ echo \
 
 # Install Docker and docker-compose
 DEBIAN_FRONTEND=noninteractive apt update -qq > /dev/null
-DEBIAN_FRONTEND=noninteractive apt install docker-ce docker-ce-cli containerd.io -qq -y> /dev/null
-pip3 install --upgrade --quiet docker-compose==$DOCKER_COMPOSE_VERSION
+DEBIAN_FRONTEND=noninteractive apt install docker-ce docker-ce-cli docker-compose-plugin containerd.io -qq -y> /dev/null
 usermod -aG docker $USER
 
 # Download the Smartnode CLI
