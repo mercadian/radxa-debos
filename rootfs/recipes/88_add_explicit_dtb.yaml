@@ -1,4 +1,0 @@
-  - action: run
-    chroot: true
-    script: scripts/add_explicit_dtb.sh
-

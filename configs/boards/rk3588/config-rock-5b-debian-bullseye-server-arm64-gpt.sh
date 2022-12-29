@@ -20,29 +20,7 @@ export IMAGESIZE=5000MB
 # Add pre-installed packages for target system
 cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-packages.list <<EOF
 
-proteus-overlay_*_arm64.deb
-
 EOF
-
-# radxa-add-overlay*.deb
-# rockchip-overlay*.deb
-# proteus-overlay_*_arm64.deb
-# linux-headers-5.10.66*.deb
-# linux-image-5.10.66*.deb
-# intel-wifibt-firmware*.deb
-# realtek-wifibt-firmware*.deb
-# resize-assistant*.deb
-# librga2_2.2.0-1_arm64.deb
-# librga2-dbgsym_2.2.0-1_arm64.deb
-# librga-dev_2.2.0-1_arm64.deb
-# librockchip-mpp1_1.5.0-1_arm64.deb
-# librockchip-mpp1-dbgsym_1.5.0-1_arm64.deb
-# librockchip-mpp-dev_1.5.0-1_arm64.deb
-# librockchip-vpu0_1.5.0-1_arm64.deb
-# librockchip-vpu0-dbgsym_1.5.0-1_arm64.deb
-# rockchip-mpp-demos_1.5.0-1_arm64.deb
-# rockchip-mpp-demos-dbgsym_1.5.0-1_arm64.deb
-# camera-engine-rkaiq*arm64.deb
 
 # Add yaml variable
 cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-variable.yaml <<EOF
@@ -68,15 +46,17 @@ cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-yaml.l
 21_packages_base.yaml
 21_packages_bluetooth.yaml
 21_packages_devel.yaml
+21_packages_proteus.yaml
 21_packages_kernel.yaml
 21_packages_math.yaml
 21_packages_utilities.yaml
 21_packages_net_lite.yaml
 21_packages_wifibt.yaml
-21_packages_proteus.yaml
 22_packages_end.yaml
 70_system_common_setup.yaml
 85_u_boot_rk35xx.yaml
 86_install_smartnode.yaml
+86_optimize_rock.yaml
+87_force_password_change.yaml
 90_clean_rootfs.yaml
 EOF

@@ -1,6 +1,29 @@
+  - action: run
+    description: Add the Mercadian package repository
+    chroot: true
+    command: |
+      set -e
+
+      mkdir -p /etc/apt/keyrings
+      wget -q -O - https://packagecloud.io/mercadian/apt/gpgkey | gpg --dearmor -o /etc/apt/keyrings/mercadian.gpg
+
+      echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/mercadian.gpg] https://packagecloud.io/mercadian/apt/debian {{$suite}} main" | tee -a /etc/apt/sources.list.d/mercadian.list
+
+  - action: run
+    description: Set the priority for Mercadian packages to the same as the Radxa repo
+    chroot: true
+    command: |
+      set -e
+
+      echo "Package: *" > /etc/apt/preferences.d/mercadian-conf
+      echo "Pin: origin Mercadian" >> /etc/apt/preferences.d/mercadian-conf
+      echo "Pin-Priority: 900" >> /etc/apt/preferences.d/mercadian-conf
+
   - action: apt
     description: Proteus Utilities
     packages: [
+        proteus-overlay,
+        cpufrequtils,
         lm-sensors,
         jq,
         fdisk,
