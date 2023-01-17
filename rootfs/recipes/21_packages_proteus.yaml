@@ -28,5 +28,8 @@
         jq,
         fdisk,
         nvme-cli,
-        linux-perf-5.10 ]
+        linux-perf-5.10,
+        unattended-upgrades,
+        ufw,
+        fail2ban ]
 

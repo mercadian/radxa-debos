@@ -28,9 +28,49 @@ wget https://github.com/rocket-pool/smartnode-install/releases/latest/download/r
 chmod +x /home/$USER/bin/rocketpool
 chown -R $USER:$USER /home/$USER/bin
 
-# Install the Smartnode
+# Install the Smartnode and the update tracker
 su -c "/home/$USER/bin/rocketpool s i -d -y" $USER
 /home/$USER/bin/rocketpool --allow-root -c /home/$USER/.rocketpool s d -y
 
 # Use legacy iptables implementation which Docker requires
 update-alternatives --set iptables /usr/sbin/iptables-legacy
+
+# Set up iptable_filter, which ufw requires
+modprobe iptable_filter
+cat <<'EOF' >> /etc/modules
+iptable_filter
+EOF
+
+# Set up ufw
+ufw default deny incoming comment 'Deny all incoming traffic'
+ufw allow "22/tcp" comment 'Allow SSH'
+ufw allow 30303/tcp comment 'Execution client port, standardized by Rocket Pool'
+ufw allow 30303/udp comment 'Execution client port, standardized by Rocket Pool'
+ufw allow 9001/tcp comment 'Consensus client port, standardized by Rocket Pool'
+ufw allow 9001/udp comment 'Consensus client port, standardized by Rocket Pool'
+sudo ufw enable
+
+# Set up unattended-upgrades
+cat <<'EOF' > /etc/apt/apt.conf.d/20auto-upgrades
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+APT::Periodic::AutocleanInterval "7";
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
+
+# This is the most important choice: auto-reboot.
+# This should be fine since Rocketpool auto-starts on reboot.
+Unattended-Upgrade::Automatic-Reboot "true";
+Unattended-Upgrade::Automatic-Reboot-Time "02:00";
+EOF
+
+# Set up fail2ban
+cat <<'EOF' > /etc/fail2ban/jail.d/ssh.local
+[sshd]
+enabled = true
+banaction = ufw
+port = 22
+filter = sshd
+logpath = %(sshd_log)s
+maxretry = 5
+EOF
