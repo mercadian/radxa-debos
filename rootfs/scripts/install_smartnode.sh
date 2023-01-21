@@ -36,19 +36,23 @@ su -c "/home/$USER/bin/rocketpool s i -d -y" $USER
 update-alternatives --set iptables /usr/sbin/iptables-legacy
 
 # Set up iptable_filter, which ufw requires
-modprobe iptable_filter
 cat <<'EOF' >> /etc/modules
 iptable_filter
 EOF
 
-# Set up ufw
+# Set up ufw on first-boot since it can't actually run in the image builder;
+# It requires a kernel module that the builder doesn't load since it's not using the actual Radxa kernel
+cat <<'EOF' >> /etc/first_boot
 ufw default deny incoming comment 'Deny all incoming traffic'
-ufw allow "22/tcp" comment 'Allow SSH'
+ufw allow 22/tcp comment 'Allow SSH'
 ufw allow 30303/tcp comment 'Execution client port, standardized by Rocket Pool'
 ufw allow 30303/udp comment 'Execution client port, standardized by Rocket Pool'
 ufw allow 9001/tcp comment 'Consensus client port, standardized by Rocket Pool'
 ufw allow 9001/udp comment 'Consensus client port, standardized by Rocket Pool'
-sudo ufw enable
+ufw allow 3100/tcp comment 'Allow grafana from anywhere'
+ufw allow from 172.16.0.0/12 to any port 9103 comment 'Allow prometheus access to node-exporter'
+ufw enable
+EOF
 
 # Set up unattended-upgrades
 cat <<'EOF' > /etc/apt/apt.conf.d/20auto-upgrades
@@ -60,8 +64,11 @@ Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
 
 # This is the most important choice: auto-reboot.
 # This should be fine since Rocketpool auto-starts on reboot.
-Unattended-Upgrade::Automatic-Reboot "true";
-Unattended-Upgrade::Automatic-Reboot-Time "02:00";
+# Uncomment the lines below (remove the # from the front) to enable auto-reboot.
+# It's disabled by default on the Proteus.
+
+# Unattended-Upgrade::Automatic-Reboot "true";
+# Unattended-Upgrade::Automatic-Reboot-Time "02:00";
 EOF
 
 # Set up fail2ban
