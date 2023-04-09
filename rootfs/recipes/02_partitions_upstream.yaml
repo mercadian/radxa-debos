@@ -14,6 +14,11 @@
         start: 32768S
         end: {{$bootpartitionend}}
         flags: [ boot, esp ]
+      - name: swap
+        fs: none
+        start: {{$swappartitionstart}}
+        end: {{$swappartitionend}}
+        flags: [ swap ]
       - name: rootfs
         fs: ext4
         start: {{$rootpartitionstart}}

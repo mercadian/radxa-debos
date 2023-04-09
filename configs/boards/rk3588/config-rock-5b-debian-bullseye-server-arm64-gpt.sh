@@ -15,7 +15,7 @@ export DISTRO=bullseye
 export VARIANT=server
 export ARCH=arm64
 export FORMAT=gpt
-export IMAGESIZE=5000MB
+export IMAGESIZE=13000MB
 
 # Add pre-installed packages for target system
 cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-packages.list <<EOF
@@ -31,7 +31,9 @@ cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-variab
 {{- \$suite := or  .suite "${DISTRO}" -}}
 {{- \$imagesize := or .imagesize "${IMAGESIZE}" -}}
 {{- \$bootpartitionend := or .bootpartitionend "1081343S" -}}
-{{- \$rootpartitionstart := or .rootpartitionstart "1081344S" -}}
+{{- \$swappartitionstart := or .swappartitionstart "1081344S" -}}
+{{- \$swappartitionend := or .swappartitionend "17858559S" -}}
+{{- \$rootpartitionstart := or .rootpartitionstart "17858560S" -}}
 {{- \$apt_repo := or .apt_repo "radxa" -}}
 
 EOF

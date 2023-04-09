@@ -25,8 +25,25 @@ WantedBy=default.target
 EOF
 
 # Configure iwlwifi with stability improvements
-cat <<EOF > /etc/modprobe.d/iwlwifi.conf
+cat <<'EOF' > /etc/modprobe.d/iwlwifi.conf
 options iwlwifi 11n_disable=1 swcrypto=0 bt_coex_active=0 power_save=0
 EOF
 
 systemctl enable dmc-governor.service
+
+# Set up the swap partition
+mkswap -L swap ${IMAGE}-part2
+UUID=$(swaplabel ${IMAGE}-part2 | grep ^UUID: | awk '{print $2}')
+echo "UUID=${UUID} none swap pri=5 0 0" >> /etc/fstab
+
+# Tune the swappiness parameters
+cat <<'EOF' >> /etc/sysctl.conf
+
+# Proteus settings for swap
+
+vm.swappiness=4
+vm.vfs_cache_pressure=120
+vm.dirty_background_ratio=10
+vm.dirty_ratio=20
+vm.page-cluster=3
+EOF
