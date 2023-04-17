@@ -47,3 +47,11 @@ vm.dirty_background_ratio=10
 vm.dirty_ratio=20
 vm.page-cluster=3
 EOF
+
+# Set up the Bluetooth blacklist for the Radxa A8
+cat <<'EOF' >> /etc/modprobe.d/blacklist.conf
+blacklist btusb
+blacklist btrtl
+blacklist btbcm
+blacklist btintel
+EOF
