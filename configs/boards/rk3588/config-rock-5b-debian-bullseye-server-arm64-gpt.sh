@@ -59,6 +59,6 @@ cat > $BUILD_DIR/${BOARD}-${MODEL}-${DISTRO}-${VARIANT}-${ARCH}-${FORMAT}-yaml.l
 85_u_boot_rk35xx.yaml
 86_install_smartnode.yaml
 86_optimize_rock.yaml
-87_force_password_change.yaml
+87_update_security.yaml
 90_clean_rootfs.yaml
 EOF
